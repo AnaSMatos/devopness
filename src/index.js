@@ -67,6 +67,7 @@ const returnStarshipStopsData = (starships, distance) => {
 app.get('/starships', async (req, res) => {
 	const {distance} = req.query
     try {
+		if(!distance) return res.status(422).send("Parâmetro 'distance' não foi enviado.")
         const starships = await getStarshipData();
         const detailedStarships = await Promise.all(starships.map(async (starship) => {
             const details = await getStarshipDetails(starship.url);
